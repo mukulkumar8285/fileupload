@@ -1,0 +1,38 @@
+<button (click)="openUpload()">Open Upload</button>
+
+<div *ngIf="isUploadVisible">
+  <form (submit)="onSubmit($event)">
+    <div style="padding: 10px; display: flex; justify-content: space-between;">
+      <div>
+        <label>Upload File</label>
+      </div>
+      <div>
+        <button type="button" (click)="closeUpload()">x</button>
+      </div>
+    </div>
+    <label class="file-upload-label">
+      <input type="file" id="file" (change)="onFileSelected($event)" />
+    </label>
+    <br/>
+    <label for="filename">File Name:</label>
+    <input type="text" name="name" id="name" [(ngModel)]="name" required />
+
+    <label for="headers">Headers:</label>
+    <select id="headers" name="headers" [(ngModel)]="headers">
+      <option value="true">True</option>
+      <option value="false">False</option>
+    </select>
+
+    <button type="submit" [disabled]="isUploading">Upload File</button>
+
+    <div *ngIf="isUploading">
+      <progress [value]="uploadProgress" max="100"></progress>
+      <p>{{ uploadProgress }}% uploaded</p>
+    </div>
+
+    <div *ngIf="uploadedFileUrl">
+      <p>File uploaded successfully!</p>
+      <a [href]="uploadedFileUrl" target="_blank">Open Uploaded File</a>
+    </div>
+  </form>
+</div>
